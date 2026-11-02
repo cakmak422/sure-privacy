@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SÜRE — Gizlilik Politikası</title>
+<style>
+  :root { --bg:#f6f8fa; --fg:#1b1f23; --muted:#57606a; --accent:#1f6f8b; --card:#ffffff; --line:#d0d7de; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1419; --fg:#e6edf3; --muted:#9da7b3; --accent:#6cb6d1; --card:#161b22; --line:#30363d; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.8rem; margin:0 0 4px; }
+  h2 { font-size:1.15rem; margin:32px 0 8px; color:var(--accent); }
+  p, li { color:var(--fg); }
+  .meta { color:var(--muted); margin:0 0 24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { text-align:left; vertical-align:top; padding:8px 6px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<h1>SÜRE Gizlilik Politikası</h1>
+<p class="meta">Yürürlük tarihi: 29 Ekim 2026 · Uygulama sürümü: 1.0.0</p>
+
+<div class="card">
+<p><strong>Kısaca:</strong> SÜRE verilerini yalnız telefonunda, şifreli olarak saklar. Uygulamanın internet izni yoktur; hesap, sunucu, reklam, analitik veya çökme raporu gönderimi yoktur. Hiçbir veri geliştiriciye ya da üçüncü kişilere iletilmez.</p>
+</div>
+
+<h2>1. Toplanan veriler</h2>
+<p>SÜRE kişisel veri toplamaz ve dışarı göndermez. Uygulamaya senin girdiğin kayıtlar (başlık, açıklama, tarih, tutar, IBAN gibi alanlar, etiketler), eklediğin fotoğraflar ve PDF'ler ile ayarların yalnız cihazında tutulur. Uygulama manifestinde <code>INTERNET</code> izni bulunmadığı için uygulama ağ bağlantısı kuramaz.</p>
+
+<h2>2. Verilerin cihazda saklanması</h2>
+<ul>
+  <li>Kayıt veritabanı SQLCipher ile şifrelenir; fotoğraf ve PDF ekleri ayrı olarak AES-256-GCM tabanlı akış şifrelemesiyle saklanır.</li>
+  <li>Şifreleme anahtarları Android Keystore'daki bir anahtarla sarılır ve uygulamanın yedeklenmeyen özel klasöründe durur.</li>
+  <li>Android'in otomatik bulut yedeklemesi ve cihazdan cihaza aktarımı SÜRE için kapalıdır; veriler bu yollarla telefondan çıkmaz.</li>
+  <li>Galeriden alınan görüntülerdeki konum gibi meta veriler saklanmadan önce temizlenir. PDF'ler, uygulamanın geri kalanından yalıtılmış ayrı bir süreçte doğrulanır.</li>
+  <li>Başka bir uygulamadan paylaşılan dosyalar, sen bir kayda eklemeyi onaylayana kadar yalnız şifreli geçici dosyalarda tutulur ve sonra silinir.</li>
+  <li><strong>Yerel hata günlüğü:</strong> Uygulama çökerse ya da bir hata yakalanırsa cihazda kısa bir teknik kayıt tutulur: zaman, uygulama ve Android sürümü, cihaz modeli, hata türü ve kod konumu. Kayıt başlıkları, tutarlar, dosya adları, yazdığın metinler ve hata mesajları bu günlüğe girmez. Günlük cihazda kalır, yedeğe girmez, en çok 20 çökme kaydı ve 30 gün tutulur. Yalnız sen Ayarlar &gt; Hakkında &gt; "Hata bildir" ekranında metnin tamamını görüp onaylarsan, senin seçtiğin uygulamayla (ör. e-posta) paylaşılır; SÜRE kendisi hiçbir yere göndermez. Aynı ekrandan günlüğü temizleyebilirsin.</li>
+</ul>
+
+<h2>3. Yedekleme ve dışa aktarma</h2>
+<ul>
+  <li><strong>Yedek (.sure):</strong> Elle yedek yalnız sen istediğinde oluşturulur ve Android dosya seçicisiyle senin seçtiğin konuma yazılır. Dosya, belirlediğin parolayla şifrelenir; elle yedekte parola cihazda saklanmaz. Seçtiğin konum bir bulut klasörü ise dosyanın oraya yüklenmesi o hizmetin kendi koşullarına tabidir; dosya yine şifrelidir.</li>
+  <li><strong>Otomatik yedekleme (isteğe bağlı, varsayılan kapalı):</strong> Açarsan SÜRE seçtiğin klasöre günlük ya da haftalık parolalı <code>.sure</code> yedeği yazar ve en eski otomatik yedekleri senin belirlediğin sayıda tutar; klasöre senin koyduğun dosyalara dokunmaz. Arka planda çalışabilmesi için yedek parolası bu cihazda Android Keystore'daki bir anahtarla şifrelenerek saklanır; düz metin olarak hiçbir yerde durmaz ve otomatik yedeklemeyi kapattığında silinir. Uygulama internete çıkmaz; seçtiğin klasör bir bulut uygulamasına (ör. Drive) aitse dosyanın yüklenmesini o uygulama kendi koşullarıyla yapar.</li>
+  <li><strong>Takvim dışa aktarma (.ics):</strong> Açık takip tarihlerini takvim dosyası olarak yazar. Bu dosya <strong>şifrelenmez</strong>; uygulama dışa aktarmadan önce bunu açıkça sorar. Kayıt adlarını eklemek isteğe bağlıdır; eklenmezse her etkinlik "SÜRE: 1 iş" başlığıyla yazılır.</li>
+</ul>
+
+<h2>4. İzinler ve kullanım amaçları</h2>
+<table>
+  <tr><th>İzin</th><th>Ne için</th></tr>
+  <tr><td>Kamera</td><td>Belgelerin fotoğrafını kayda eklemek. Yalnız kamerayı sen açtığında kullanılır; çekilen fotoğraf şifreli saklanır.</td></tr>
+  <tr><td>Bildirimler</td><td>Takip tarihlerinin hatırlatmaları. Bildirim içeriğinde kayıt adlarının görünmesi Ayarlar'dan kapatılabilir; kilit ekranında kişisel içerik gizlenir.</td></tr>
+  <tr><td>Açılışta çalışma (<code>RECEIVE_BOOT_COMPLETED</code>)</td><td>Telefon yeniden başladığında hatırlatmaları yeniden planlamak.</td></tr>
+  <tr><td>Biyometri / parmak izi</td><td>İsteğe bağlı uygulama kilidi. Doğrulamayı Android yapar; SÜRE biyometrik veriye erişmez ve saklamaz.</td></tr>
+</table>
+<p>Ana ekran widget'ı varsayılan olarak yalnız sayıları gösterir. Kayıt adları yalnız Ayarlar'dan açıkça açarsan ve uygulama kilidi kapalıysa gösterilir; bu durumda adlar ana ekranda herkesin görebileceği biçimde durur.</p>
+
+<h2>5. Üçüncü taraflar</h2>
+<p>SÜRE reklam, analitik, izleme, çökme raporlama veya ödeme kitaplığı içermez ve verileri hiçbir üçüncü tarafla paylaşmaz. Uygulama Google Play üzerinden değil, doğrudan APK olarak dağıtılır.</p>
+
+<h2>6. Verilerin silinmesi</h2>
+<p>Tüm veriler cihazında olduğu için silme senin kontrolündedir. Kayıtları tek tek ya da tüm verileri Ayarlar'dan silebilirsin. Bir kaydı silmek; eklerini, takip tarihlerini ve hatırlatmalarını da kalıcı olarak siler. Ayarlar &gt; Veri &gt; "Tüm verileri sil" şifreli kasayı, ekleri, tercihleri, otomatik yedek parolasını ve hata günlüğünü bu cihazdan siler; uygulama ilk açılış ekranına döner. Uygulamayı kaldırmak da aynı sonucu verir. Daha önce oluşturduğun <code>.sure</code> yedekleri ve <code>.ics</code> dosyaları seçtiğin konumda kalır; onları ayrıca silmen gerekir.</p>
+
+<h2>7. Değişiklikler</h2>
+<p>Bu politika değişirse yeni metin bu sayfada yeni bir yürürlük tarihiyle yayımlanır. Uygulamanın internet izni olmadığından değişiklik uygulama içinden bildirilemez; güncel sürümün notlarında belirtilir.</p>
+
+<h2>8. İletişim</h2>
+<p>Sorular için: <a href="mailto:surezamaniyakala@gmail.com">surezamaniyakala@gmail.com</a></p>
+</main>
+</body>
+</html>
